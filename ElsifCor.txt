@@ -1,0 +1,13 @@
+my $var = 99;
+if($var < 99)
+{
+	print("Menor que 99");
+}
+elsif($var == 99)
+{
+	print("Igual a 99");
+}
+else
+{
+	print("Mayor que 99");
+}

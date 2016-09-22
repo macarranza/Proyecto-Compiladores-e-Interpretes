@@ -1,0 +1,18 @@
+/*split: Divide un string psts convertirl en un array a partir del patron indicado*/
+my $cadena = "uno&dos&tres&cuatro";
+my @lista = split($cadena,"&");
+
+/*join: Convierte un array en un string mediante  el separador indicado*/
+my @numeros = ["uno","dos","tres","cuatro","cinco"];
+my $string = join(@numeros,"&");
+
+print($string);
+
+foreach($elem,@lista)
+{
+    print($elem);
+}
+/*retorna un arreglo con los valores separados por espacio*/
+
+
+

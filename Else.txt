@@ -1,0 +1,15 @@
+/* La estructura del else es : */
+/* else */
+/* { */
+/* lista_declaraciones */
+/* } */
+/* En este caso falta el { para completar la estructura. */
+
+my $var = 30;
+if($var < 99)
+{
+	print("Menor que 99");
+}
+else
+	print("Mayor que 99");
+}

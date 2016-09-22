@@ -1,0 +1,9 @@
+my @begin=["a","b","c"];
+/*Error lexico en el simbolo fuera del alfabeto ., ademas de la manera incorrecta de llamar una funcion*/
+print(@begin.length());
+print(length(@begin));
+/*Simbolos fuera del alfabeto*/
+#!^?
+/*Simbolo _ fuera del alfabeto establecida al lenguaje*/
+$hola_mundo
+

@@ -1,0 +1,13 @@
+/* La estructura del for es : */
+/* for (declaracion_variable;expresion_logica;incrementador) */
+/* { */
+/* lista_declaraciones */
+/* } */
+/* En este caso hay una coma en vez de punto y coma luego */
+/* de la declaración, por lo tanto se incumple la estructura. */
+
+my $var = 0;
+for(my $i = 0,$i < 30;$i++)
+{
+	print($i);
+}

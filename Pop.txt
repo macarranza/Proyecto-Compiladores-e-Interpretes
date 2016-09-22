@@ -1,0 +1,7 @@
+/* La estructura del pop es : */
+/* pop(@ ID); */
+/* En este caso falta el ; para completar la estructura. */
+
+my @ar = ["A","B","C"];
+my $ultimo = pop (@ar)
+print ($ultimo);

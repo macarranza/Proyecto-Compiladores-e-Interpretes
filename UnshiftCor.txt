@@ -1,0 +1,6 @@
+my @ar = ["B","C"];
+unshift(@ar,"A");
+foreach($elem,@ar)
+{
+	print($elem);
+}

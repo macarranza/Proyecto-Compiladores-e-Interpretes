@@ -1,0 +1,11 @@
+/* La estructura del if es : */
+/* if (expresion) */
+/* { */
+/* lista_declaraciones */
+/* } */
+/* En este caso falta el ) para cerrar la estructura. */
+
+my $var = 30;
+if($var < 99{
+	print("El numero es menor que 99");
+}

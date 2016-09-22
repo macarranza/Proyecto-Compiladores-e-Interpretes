@@ -1,0 +1,3 @@
+/*En este caso falta el elemento de cierre de comentario.*/
+
+/*Comentario

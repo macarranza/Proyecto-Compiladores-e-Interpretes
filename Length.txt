@@ -1,0 +1,7 @@
+/* La estructura del length es : */
+/* length(@ ID); ó length($ ID); */
+/* En este caso faltan los paréntesis para completar la estructura. */
+
+my @ar = ["Hola","Mundo"];
+my $tam = length @ar;
+print($tam);

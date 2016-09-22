@@ -1,0 +1,7 @@
+my fun funcionx($param1,$param2)
+{
+	my $var = $param1 + $param2;
+	print($var);
+}
+
+fun funcionx(1,2);

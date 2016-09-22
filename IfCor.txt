@@ -1,0 +1,5 @@
+my $var = 30;
+if($var < 99)
+{
+	print("El numero es menor que 99");
+}

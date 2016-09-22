@@ -1,0 +1,8 @@
+/* La estructura del shift es : */
+/* shift(@ ID); */
+/* En este caso faltan los paréntesis para */
+/* completar la estructura. */
+
+my @ar = [5,6,7,12,15,92];
+my $var = shift @ar;
+print($var);

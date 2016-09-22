@@ -1,0 +1,9 @@
+my $var = 28;
+if ($var>13)
+{
+	return 1;
+}
+else
+{
+	return 0;
+}

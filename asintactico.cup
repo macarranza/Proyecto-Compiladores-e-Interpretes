@@ -1,0 +1,289 @@
+ 
+   
+/* ---------------Seccion de declaraciones preliminares--------------------*/
+package interpreteperlasintactico;
+
+/* Import the class java_cup.runtime.*  */
+import java_cup.runtime.*;
+import java.io.Reader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+   
+/* Codigo del parser, se copia integramente a la clase final.
+    Agregamos el manejo de errores. */
+parser code {:
+    String left;
+    String right;
+    /* Reporte de error encontrado. */
+    public void report_error(String message, Object info) {
+        
+        if (info instanceof java_cup.runtime.Symbol) {
+            java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
+            System.out.println("Left: "+s.left+" "+"Right: "+s.right);
+            left = new String();
+            right = new String();
+            if (s.left >= 0) {                
+                //Linea
+                left = (s.left+1)+"";
+                if (s.right >= 0)
+                    right = (s.right+1)+"";
+            }
+        }
+        //System.err.println(m);
+    }
+   
+    /* Cuando se encuentra un error de donde el sistema no puede
+        recuperarse, se lanza un error fatal. Se despliega el mensaje
+        de error y se finaliza la ejecucion. */
+    public void report_fatal_error(String message, Object info)  throws IOException{
+        System.out.println("write: "+info);
+        writeOutputFile("Error sintactico en la linea: "+left+" columna: "+right, info);
+        
+        //System.exit(1);
+    }
+
+    private void writeOutputFile(String message, Object info) throws IOException
+        {
+            String filename = "error.out";
+            BufferedWriter out = new BufferedWriter(new FileWriter(filename,true));
+            
+            out.write(message+ "\n");
+            
+            out.close();
+	}
+
+    /* Metodo main para garantizar la ejecucion del analizador
+       lexico y sintactico, ademas que se pase como parametro la tabla
+       de simbolos correspondiente. */
+    public static void main(String[] args){
+        try {
+            AnalizadorSintactico asin = new AnalizadorSintactico(
+                    new AnalizadorLexico( new FileReader(args[0])));
+            Object result = asin.parse().value;
+            System.out.println("\n*** Resultados finales *** \n ");
+        } catch (Exception ex) {
+            //ex.printStackTrace();
+        }
+    }
+:};
+   
+
+   
+/* ------------Declaracion de simbolos terminales y no terminales---------- */
+   
+/* Terminales (tokens obtenidos por el analizador lexico).  
+   Terminales que no tienen un valor son listados primero, los terminales que
+   tienen un valor como los enteros son listados en la segunda o demas lineas. */
+terminal           ASIGNACION,EQUIVALENCIA,DIFERENCIA,AND,ANDAND,OR, OROR, MAS,
+                   MASMAS,MULTI,MENOS,MENOSMENOS,DIV,MENORQUE,MENORIGUALQUE,MAYORQUE,
+                   MAYORIGUALQUE,ABRIRPARENTESIS,CERRARPARENTESIS,ABRIRBRACKETS,
+                   CERRARBRACKETS,ABRIRLLAVES,CERRARLLAVES,PUNTOCOMA,DOSPUNTOS,COMA,
+                   DOLAR,AT, MY,FUN,CONDICIONIF,CONDICIONELSE,CONDICIONELSIF,
+                   CONDICIONSWITCH,CONDICIONCASE,CONDICIONDEFAULT,BUCLEWHILE,BUCLEDO,BUCLEFOR,
+                   BUCLEFOREACH,RETORNO,PRINT,SHIFT,UNSHIFT,POP,PUSH,LARGOLISTA,BREAK,
+                   JOIN,SPLIT,ESPACIO;
+terminal Integer   NUMERO;
+terminal String    ID,STRINGCOMPLEJO;
+   
+    /* No terminales usados en la seccion gramatical. 
+   Primero se lista los no terminales que tienen un valor Object y despues
+   se lista los no terminales que tienen un entero. Un Object se refiere a que
+   no tienen tipo, pudiendo ser entero o String. */
+
+   non terminal Object     programa,lista_declaraciones,declaracion,declaracion_variable,declaracion_funcion,
+                        declaracion_bloque,parametros,parametro,
+                        declaracion_seleccion,declaracion_iteracion,declaracion_retorno,expresion,
+                        expresion_logica,operador_logico,operador_aritmetico,valor,
+                        incrementador,operador_lista,expresion_simple,condicion_case,linea_espacio, 
+                        epsilon,espacios,condicion_elsif,condicion_if ;
+   
+
+
+/* ------------------- Seccion de la gramatica ------------------------ */
+   
+   programa ::= linea_espacio lista_declaraciones
+                    ;
+        
+   lista_declaraciones      ::=     lista_declaraciones declaracion|
+                                    declaracion|
+                                    error
+                                    {:
+                                        System.out.println("Error encontado");
+                                        parser.report_fatal_error("Error sintactico", RESULT);
+                                    :}
+                    ;
+        
+   declaracion              ::=     declaracion_variable| 
+                                    declaracion_funcion linea_espacio|
+                                    declaracion_bloque 
+                    ;
+
+    epsilon          ::=         
+                    ;
+
+    espacios                ::=     espacios ESPACIO | ESPACIO   
+                    ;
+    linea_espacio           ::=     espacios |epsilon
+                    ;
+    declaracion_variable    ::=     MY  linea_espacio DOLAR ID  linea_espacio ASIGNACION  linea_espacio expresion PUNTOCOMA linea_espacio |
+                                    MY linea_espacio AT ID  linea_espacio ASIGNACION  linea_espacio ABRIRBRACKETS  linea_espacio parametros 
+                                    CERRARBRACKETS PUNTOCOMA linea_espacio|
+                                    MY linea_espacio AT ID  linea_espacio ASIGNACION  linea_espacio expresion PUNTOCOMA linea_espacio|
+                                    AT ID  linea_espacio ASIGNACION  linea_espacio expresion PUNTOCOMA linea_espacio|
+                                    DOLAR ID  linea_espacio ASIGNACION linea_espacio expresion  PUNTOCOMA linea_espacio|
+                                    AT ID  linea_espacio ASIGNACION  linea_espacio 
+                                    ABRIRBRACKETS  linea_espacio parametros CERRARBRACKETS  PUNTOCOMA linea_espacio
+                    ;
+
+    declaracion_funcion     ::=     MY  linea_espacio FUN linea_espacio ID linea_espacio 
+                                    ABRIRPARENTESIS linea_espacio parametros  CERRARPARENTESIS linea_espacio
+                                    ABRIRLLAVES  linea_espacio lista_declaraciones CERRARLLAVES |
+                                    FUN linea_espacio ID linea_espacio
+                                    ABRIRPARENTESIS linea_espacio parametros CERRARPARENTESIS linea_espacio PUNTOCOMA
+                    ; 
+
+    parametros              ::=     parametros  COMA linea_espacio parametro |parametro 
+                    ;
+    parametro               ::=     expresion 
+                    ;
+
+    declaracion_bloque      ::=     declaracion_seleccion |
+                                    declaracion_iteracion |
+                                    declaracion_retorno PUNTOCOMA linea_espacio|
+                                    expresion PUNTOCOMA linea_espacio
+                    ;
+
+    declaracion_seleccion  ::=      condicion_if|
+                                    CONDICIONSWITCH linea_espacio ABRIRPARENTESIS linea_espacio expresion_simple CERRARPARENTESIS linea_espacio
+                                    ABRIRLLAVES linea_espacio
+                                    condicion_case  
+                                    CONDICIONDEFAULT linea_espacio DOSPUNTOS linea_espacio 
+                                    ABRIRLLAVES linea_espacio
+                                    lista_declaraciones 
+                                    CERRARLLAVES linea_espacio 
+                                    CERRARLLAVES  linea_espacio    
+                    ;
+   
+    condicion_if        ::=         CONDICIONIF linea_espacio ABRIRPARENTESIS  linea_espacio expresion_logica  CERRARPARENTESIS linea_espacio
+                                    ABRIRLLAVES linea_espacio
+                                        lista_declaraciones 
+                                    CERRARLLAVES linea_espacio|
+                                    CONDICIONIF linea_espacio ABRIRPARENTESIS  linea_espacio expresion_logica  CERRARPARENTESIS linea_espacio
+                                    ABRIRLLAVES linea_espacio
+                                        lista_declaraciones 
+                                    CERRARLLAVES linea_espacio
+                                    condicion_elsif
+                                    CONDICIONELSE linea_espacio
+                                    ABRIRLLAVES linea_espacio
+                                        lista_declaraciones 
+                                    CERRARLLAVES linea_espacio|
+                                    CONDICIONIF linea_espacio ABRIRPARENTESIS  linea_espacio expresion_logica  CERRARPARENTESIS linea_espacio
+                                    ABRIRLLAVES linea_espacio
+                                        lista_declaraciones 
+                                    CERRARLLAVES linea_espacio
+                                    CONDICIONELSE linea_espacio
+                                    ABRIRLLAVES linea_espacio
+                                        lista_declaraciones 
+                                    CERRARLLAVES linea_espacio
+                    ;
+
+     condicion_elsif         ::=    condicion_elsif CONDICIONELSIF linea_espacio ABRIRPARENTESIS  linea_espacio expresion_logica  CERRARPARENTESIS linea_espacio
+                                    ABRIRLLAVES linea_espacio
+                                        lista_declaraciones 
+                                    CERRARLLAVES linea_espacio|
+                                    CONDICIONELSIF linea_espacio ABRIRPARENTESIS  linea_espacio expresion_logica  CERRARPARENTESIS linea_espacio
+                                    ABRIRLLAVES linea_espacio
+                                        lista_declaraciones 
+                                    CERRARLLAVES linea_espacio
+                                    
+                    ;
+    
+    condicion_case          ::=     condicion_case  
+                                    CONDICIONCASE linea_espacio expresion  DOSPUNTOS linea_espacio 
+                                    ABRIRLLAVES  linea_espacio 
+                                    lista_declaraciones 
+                                    CERRARLLAVES linea_espacio|
+                                    CONDICIONCASE linea_espacio expresion DOSPUNTOS linea_espacio 
+                                    ABRIRLLAVES linea_espacio 
+                                    lista_declaraciones 
+                                    CERRARLLAVES linea_espacio
+                    ;
+
+    declaracion_iteracion   ::=     BUCLEWHILE linea_espacio ABRIRPARENTESIS linea_espacio expresion_logica CERRARPARENTESIS linea_espacio
+                                    ABRIRLLAVES linea_espacio 
+                                    lista_declaraciones 
+                                    CERRARLLAVES linea_espacio|
+                                    BUCLEFOR linea_espacio 
+                                    ABRIRPARENTESIS  linea_espacio 
+                                    declaracion_variable /*;*/ expresion_logica PUNTOCOMA incrementador CERRARPARENTESIS linea_espacio
+                                    ABRIRLLAVES linea_espacio
+                                    lista_declaraciones 
+                                    CERRARLLAVES linea_espacio|
+                                    BUCLEFOREACH linea_espacio ABRIRPARENTESIS linea_espacio DOLAR ID linea_espacio COMA linea_espacio AT ID CERRARPARENTESIS linea_espacio
+                                    ABRIRLLAVES linea_espacio
+                                    lista_declaraciones 
+                                    CERRARLLAVES linea_espacio|
+                                    BUCLEDO linea_espacio ABRIRLLAVES linea_espacio lista_declaraciones CERRARLLAVES linea_espacio
+                                    BUCLEWHILE linea_espacio ABRIRPARENTESIS linea_espacio expresion_logica CERRARPARENTESIS linea_espacio PUNTOCOMA linea_espacio
+                    ;
+    declaracion_retorno     ::=     RETORNO linea_espacio expresion | 
+                                    PRINT linea_espacio ABRIRPARENTESIS linea_espacio expresion CERRARPARENTESIS |
+                                    BREAK 
+                    ;
+
+    expresion               ::=     valor  operador_logico expresion |
+                                    valor operador_aritmetico expresion|
+                                   expresion_simple 
+                    ;
+    expresion_simple        ::=     incrementador|
+                                    operador_lista linea_espacio|
+                                    valor
+                    ;
+    
+    expresion_logica        ::=     expresion_simple operador_logico expresion_simple 
+                    ;
+
+
+
+    operador_logico         ::=     EQUIVALENCIA linea_espacio| 
+                                    AND linea_espacio|
+                                    ANDAND linea_espacio|
+                                    OR linea_espacio|
+                                    OROR linea_espacio|
+                                    DIFERENCIA linea_espacio|
+                                    MAYORQUE linea_espacio|
+                                    MAYORIGUALQUE linea_espacio|
+                                    MENORQUE linea_espacio|
+                                    MENORIGUALQUE linea_espacio
+                    ;
+
+    operador_aritmetico     ::=  MAS linea_espacio|
+                                 MENOS linea_espacio|
+                                 MULTI linea_espacio|
+                                 DIV linea_espacio
+                    ;
+
+    operador_lista          ::= SHIFT ABRIRPARENTESIS expresion CERRARPARENTESIS|
+                                UNSHIFT ABRIRPARENTESIS AT ID COMA expresion CERRARPARENTESIS|
+                                LARGOLISTA ABRIRPARENTESIS AT ID CERRARPARENTESIS|
+                                POP ABRIRPARENTESIS AT ID CERRARPARENTESIS|
+                                PUSH ABRIRPARENTESIS AT ID COMA expresion CERRARPARENTESIS|
+                                JOIN ABRIRPARENTESIS AT ID COMA expresion CERRARPARENTESIS |
+                                SPLIT ABRIRPARENTESIS DOLAR ID COMA expresion CERRARPARENTESIS|
+                                SPLIT ABRIRPARENTESIS AT ID COMA expresion CERRARPARENTESIS
+                    ;
+
+
+    valor                   ::= NUMERO linea_espacio|
+                                STRINGCOMPLEJO linea_espacio|
+                                DOLAR ID linea_espacio|
+                                AT ID linea_espacio
+                    ;
+
+    incrementador           ::= DOLAR ID MASMAS linea_espacio|
+                                NUMERO MASMAS linea_espacio|
+                                DOLAR ID MENOSMENOS linea_espacio|
+                                NUMERO MENOSMENOS linea_espacio
+                    ;

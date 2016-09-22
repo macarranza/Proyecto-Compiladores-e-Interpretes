@@ -1,0 +1,10 @@
+/* La estructura del split es : */
+/* split(patron, $ ID); */
+/* En este caso falta la cadena para completar la estructura. */
+
+my $string = "H&O&L&A";
+my @ar = split("&");
+foreach($elem,@ar)
+{
+	print($elem);
+}

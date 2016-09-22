@@ -1,0 +1,12 @@
+/* La estructura del unshift es : */
+/* unshift(@ ID, expresion); */
+/* En este caso la expresión y el arreglo */
+/* están al revés, por lo tanto esto */ 
+/* incumple la estructura. */
+
+my @ar = ["B","C"];
+unshift("A",@ar);
+foreach($elem,@ar)
+{
+	print($elem);
+}

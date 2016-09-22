@@ -1,0 +1,3 @@
+my @ar = ["H","O","L","A"];
+my $string = join(@ar,"&");
+print($string);

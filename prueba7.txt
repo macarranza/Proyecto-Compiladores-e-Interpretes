@@ -1,0 +1,10 @@
+/*Error sintactico 1 falta de simbolos de cierre */
+my @begin=["A","b","c"]
+my @variable=[1,2,3];
+my $variable=4;
+while($variable=>5)
+{
+   variable++;
+
+
+

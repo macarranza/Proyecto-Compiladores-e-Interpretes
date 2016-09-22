@@ -1,0 +1,7 @@
+my @ar = ["A","B"];
+my $str = "C";
+push(@ar,$str);
+foreach($elem,@ar)
+{
+	print($elem);
+}

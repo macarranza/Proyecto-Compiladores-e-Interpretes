@@ -1,0 +1,13 @@
+/* La estructura del foreach es : */
+/* foreach (@ ID) */
+/* { */
+/* lista_declaraciones */
+/* } */
+/* En este caso se utiliza el foreach como si fuera un for */
+/* Por lo tanto se incumple la estructura. */
+
+my @ar = ["A","B","C"];
+foreach(my $elem = 0; $i<length(@ar); $i++)
+{
+	print($elem);
+}

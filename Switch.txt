@@ -1,0 +1,24 @@
+/* La estructura del switch es : */
+/* switch (expresion_simple) */
+/* { */
+/* expresion_case */
+/* expresion_default */
+/* } */
+/* En este caso falta la expresión default. */
+
+my $caso = 2;
+my $var1 = 0;
+my $var2 = 3;
+switch ($caso)
+{
+	case 1:
+		{
+			$var1 = $var2 + 32;
+			break;
+		}
+	case 2:
+		{
+			$var1 = $var2 + 16;
+			break;
+		}
+}

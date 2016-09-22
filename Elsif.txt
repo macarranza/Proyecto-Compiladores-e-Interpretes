@@ -1,0 +1,21 @@
+/* La estructura del elsif es : */
+/* elsif (expresion) */
+/* { */
+/* lista_declaraciones */
+/* } */
+/* En este caso ==99 no es una expresión válida. */
+/* Por lo tanto, se incumple la estructura. */
+
+my $var = 99;
+if($var < 99)
+{
+	print("Menor que 99");
+}
+elsif(==99)
+{
+	print("Igual a 99");
+}
+else
+{
+	print("Mayor que 99");
+}

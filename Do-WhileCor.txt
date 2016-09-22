@@ -1,0 +1,6 @@
+my $cont = 1;
+                   do
+                   {
+                   	print($cont);
+                   	$cont++;
+                   } while($cont < 5);

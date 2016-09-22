@@ -1,0 +1,21 @@
+my $variable1 = 3;
+my $variable2 = 2;
+if($variable1>$variable2)
+{
+    my $contador = 0;
+    while($contador<3)
+    {
+        print("variable 1 es mayor");
+        $contador++;
+    } 
+}
+else
+{
+    my $contador = 2;
+    while($contador>0)
+    {
+        print("variable 2 es mayor");
+        $contador--;
+    }
+}
+

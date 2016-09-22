@@ -1,0 +1,15 @@
+/* La estructura del fun es : */
+/* my fun ID(parametros) */
+/* { */
+/* lista_declaraciones */
+/* } */
+/* En este caso falta el ID o nombre de la funcion */ 
+/* para completar la estructura. */
+
+my fun($param1,$param2)
+{
+	my $var = $param1 + $param2;
+	print($var);
+}
+
+fun funcionx(1,2);

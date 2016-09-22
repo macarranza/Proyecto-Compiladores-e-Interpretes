@@ -1,0 +1,26 @@
+my $variable1 = 3;
+my $variable2 = 0;
+
+for(my $contador=0;$contador<$variable1;$contador++)
+{
+    switch($contador)
+    {
+        case 0:
+            {
+                $variable2 = $variable1 - 1;
+                break;
+            }
+        case 1:
+            {
+                $variable2 = $variable1 - 2;
+                break;
+            }
+        default:
+            {
+                $variable2 = 90;
+                break;
+            }
+    }
+    print($variable2);
+}
+

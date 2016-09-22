@@ -1,0 +1,9 @@
+/*Error semantico numero 2 error logico*/
+/*Re-declaracion de una variable ($var1)*/
+
+my $var1 = 5;
+my $var1 = 2;
+
+print($var1);
+
+

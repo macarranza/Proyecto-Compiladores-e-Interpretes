@@ -1,0 +1,6 @@
+my $string = "H&O&L&A";
+my @ar = split($string,"&");
+foreach($elem,@ar)
+{
+	print($elem);
+}

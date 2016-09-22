@@ -1,0 +1,23 @@
+/* La estructura del break es : */
+/* break; */
+/* En este caso falta el ; para completar la estructura. */
+
+my $var = 2;
+switch ($var)
+{
+	case 1:
+		{
+			$var = $var + 32;
+			break
+		}
+	case 2:
+		{
+			$var = $var + 16;
+			break;
+		}
+	default:
+		{
+			$var = $var + 67;
+			break;
+		}
+}

@@ -1,0 +1,19 @@
+my $var = 2;
+switch ($var)
+{
+	case 1:
+		{
+			$var = $var + 32;
+			break;
+		}
+	case 2:
+		{
+			$var = $var + 16;
+			break;
+		}	
+	default:
+		{
+			$var = $var + $var;
+			break;
+		}
+}

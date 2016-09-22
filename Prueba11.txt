@@ -1,0 +1,6 @@
+/*Error semantico numero 3*/
+/*Uso de variable ($str) no declarada */
+
+my $var1 = $str;
+
+print($var1);

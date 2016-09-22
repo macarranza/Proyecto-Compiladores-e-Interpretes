@@ -1,0 +1,22 @@
+my @begin = ["a","b","c"];
+
+my fun funcionx($parametro1,$parametro2)
+{
+    my $tam = length(@begin);
+
+    while($parametro1<=$tam)
+    {
+        print(pop(@begin));
+
+        push(@begin,$parametro2);
+
+        print(shift(@begin));
+
+        unshift(@begin,"d");
+
+        $parametro1++;
+
+        $tam = length(@begin);
+    }
+}
+fun funcionx(1,"x");

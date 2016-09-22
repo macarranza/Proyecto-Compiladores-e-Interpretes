@@ -1,0 +1,3 @@
+my @ar = ["A","B","C"];
+my $ultimo = pop(@ar);
+print ($ultimo);

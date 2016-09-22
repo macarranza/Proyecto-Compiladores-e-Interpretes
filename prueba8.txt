@@ -1,0 +1,9 @@
+/*Segundo problema sintactico simbolos del alfabeto no esperados*/
+/*falta el my necesario en la gramatica BNF ademas de asignacion incorrecta*/
+my $var1 = 5;
+mientras($variable=5)
+{
+    print("Hola");
+}
+
+

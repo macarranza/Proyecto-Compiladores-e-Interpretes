@@ -1,0 +1,11 @@
+/* La estructura del push es : */
+/* push(@ ID, expresion); */
+/* En este caso falta el arreglo para completar la estructura. */
+
+my @ar = ["A","B"];
+my $str = "C";
+push($str);
+foreach($elem,@ar)
+{
+	print($elem);
+}

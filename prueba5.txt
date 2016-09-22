@@ -1,0 +1,15 @@
+/*prueba 5 error lexico #1 simbolos fuera del alfabeto*/
+#^!\?
+
+
+
+
+
+
+
+
+
+
+
+
+

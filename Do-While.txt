@@ -1,0 +1,15 @@
+/* La estructura del do-while es : */
+/* do */
+/* { */
+/* lista_declaraciones */
+/* } while (expresion_logica); */
+/* En este caso falta el while esta dentro de las */
+/* llaves, por lo tanto incumple la estructura. */
+
+my $cont = 1;
+do 
+{
+	print($cont);
+	$cont++;
+while($cont < 5);
+}

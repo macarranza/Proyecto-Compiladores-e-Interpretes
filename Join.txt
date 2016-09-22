@@ -1,0 +1,7 @@
+/* La estructura del join es : */
+/* join (union, @ ID) */
+/* En este caso falta el elemento de unión para completar la estructura. */
+
+my @ar = ["H","O","L","A"];
+my $string = join(@ar);
+print($string);

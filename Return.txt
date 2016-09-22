@@ -1,0 +1,13 @@
+/* La estructura del return es: */
+/* return expresion; */
+/* En este caso falta el ; para completar la estructura. */
+
+my $var = 28;
+if ($var > 13)
+{
+	return 1;
+}
+else
+{
+	return 0
+}

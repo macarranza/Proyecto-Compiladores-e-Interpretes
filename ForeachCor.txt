@@ -1,0 +1,5 @@
+my @ar = ["A","B","C"];
+foreach($elem,@ar)
+{
+	print($elem);
+}

@@ -1,0 +1,7 @@
+my $i = 5;
+my $var = 0;
+for(my $i=0;$i<30;$i++)
+{
+	$var = $i+5;
+	print($var);
+}

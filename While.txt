@@ -1,0 +1,14 @@
+/* La estructura del while es : */
+/* while (expresion_lógica) */
+/* { */
+/* lista_declaraciones */
+/* } */
+/* En este caso la expresión lógica es incorrecta. */
+/* Por lo tanto se incumple la estructura. */
+
+my $cont = 1;
+while ($cont=20)
+{
+	print($cont);
+	$cont++;
+}

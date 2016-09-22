@@ -1,0 +1,3 @@
+my @ar = ["Hola","Mundo"];
+my $tam = length(@ar);
+print($tam);
